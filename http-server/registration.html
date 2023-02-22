@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        .style {
+            margin: auto;
+            width: 28%;
+            border: 3px solid rgb(0, 0, 0);
+            padding: 10px;
+            background-color: rgb(252, 252, 252);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="style">
+        <form onsubmit=Valutidate();return false">
+            <h3>REGISTRATION FORM</h3>
+            <p id="nameS">Name
+                <input type="text" id="name" required>
+            </p>
+
+            <p id="emailS">Email
+                <input required type="email" id="email">
+            </p>
+
+            <p id="passwordS">Password
+                <input type="password" id="password">
+            </p>
+
+            <p id="dobS">Date of Birth
+                <input type="date" id="dob" max="2005-02-13" min="1968-02-13">
+            </p>
+
+            <p id="accceptterms"> <input type="checkbox" id="checkbox">
+                Accept Terms & Condition</p>
+
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered" id="regTable">
+        <thead>
+            <th colspan="5" id="enters" style="text-align: center;">Entries</th>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Dob</th>
+                <th>Accepted terms?</th>
+            </tr>
+
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</body>
+<script>
+    const Valutidate = () => {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const psw = document.getElementById("password").value;
+        const dob = document.getElementById("dob").value;
+        const check = document.getElementById("checkbox").checked;
+        var Entries;
+        if (localStorage.getItem('user-entries') === null)
+            Entries = [];
+        else
+            Entries = JSON.parse(localStorage.getItem('user-entries'))
+        Entries.unshift({
+            name: name,
+            email: email,
+            psw: psw,
+            dob: dob,
+            check: check
+        })
+        localStorage.setItem('user-entries', JSON.stringify(Entries));
+        visible_data();
+    }
+    const visible_data = () => {
+        var Entries;
+        if (localStorage.getItem('user-entries') === null)
+            Entries = [];
+        else
+            Entries = JSON.parse(localStorage.getItem('user-entries'))
+
+        var html = "";
+
+        Entries.forEach((element, intex) => {
+            html += "<tr>";
+            html += "<td>" + element.name + "</td>";
+            html += "<td>" + element.email + "</td>";
+            html += "<td>" + element.psw + "</td>";
+            html += "<td>" + element.dob + "</td>";
+            html += "<td>" + element.check + "</td>";
+            html += "</tr>";
+        });
+        document.querySelector("#regTable tbody").innerHTML = html;
+
+    }
+    document.onload = visible_data();
+</script>
+
+</html>
