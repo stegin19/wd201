@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 const { toNamespacedPath } = require("path");
 const todoList = require("../todo");
 
@@ -61,7 +63,13 @@ describe("Todolist Test Suite", () => {
       completed: false,
       dueDate: today,
     });
-    expect(dueToday().length).toBe(4);
+
+    add({
+      title: "exam",
+      completed: false,
+      dueDate: today,
+    });
+    expect(dueToday().length).toBe(5);
   });
 
   test("due later", () => {
@@ -75,6 +83,13 @@ describe("Todolist Test Suite", () => {
       completed: false,
       dueDate: tomorrow,
     });
-    expect(dueLater().length).toBe(2);
+
+    add({
+      title: "car wash",
+      completed: false,
+      dueDate: tomorrow,
+    });
+
+    expect(dueLater().length).toBe(3);
   });
 });
