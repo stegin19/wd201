@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const { toNamespacedPath } = require("path");
+
 const todoList = require("../todo");
 
 const { all, add, markAsComplete, overdue, dueToday, dueLater } = todoList();
@@ -54,8 +54,8 @@ describe("Todolist Test Suite", () => {
 
   test("due today", () => {
     add({
-      title: "pay rent",
-      completed: false,
+      title: "rent",
+      completed: true,
       dueDate: today,
     });
     add({
@@ -66,7 +66,7 @@ describe("Todolist Test Suite", () => {
 
     add({
       title: "exam",
-      completed: false,
+      completed: true,
       dueDate: today,
     });
     expect(dueToday().length).toBe(5);
@@ -74,12 +74,12 @@ describe("Todolist Test Suite", () => {
 
   test("due later", () => {
     add({
-      title: "file taxes",
+      title: " tax",
       completed: false,
       dueDate: tomorrow,
     });
     add({
-      title: "pay electric bill",
+      title: "loan",
       completed: false,
       dueDate: tomorrow,
     });
