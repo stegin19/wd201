@@ -15,7 +15,7 @@ describe("Tests for functions in todo.js", function () {
     await db.sequelize.sync({ force: true });
   });
 
-  test("overdue items", async () => {
+  test("overdue item", async () => {
     const todo = await db.Todo.addTask({
       title: "This is a sample item",
       dueDate: getJSDate(-2),
