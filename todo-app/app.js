@@ -17,8 +17,8 @@ app.get("/todos", async function (_request, response) {
   // Then, we have to respond with all Todos, like:
   // response.send(todos)
   try {
-    const todos = await Todo.getAllTodos();
-    return response.json(todos);
+    const todo = await Todo.getAllTodos();
+    return response.json(todo);
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
