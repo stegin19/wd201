@@ -17,8 +17,8 @@ app.get("/todos", async function (_request, response) {
   // Then, we have to respond with all Todos, like:
   // response.send(todos)
   try {
-    const todo = await Todo.getAllTodos();
-    return response.json(todo);
+    const todos = await Todo.getAllTodos();
+    return response.json(todos);
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
@@ -66,7 +66,7 @@ app.delete("/todos/:id", async function (request, response) {
   try {
     const del = await Todo.findByPk(request.params.id);
     if (del) {
-      await del.remove();
+      await del.destroy();
       return response.json(true);
     } else {
       return response.json(false);
