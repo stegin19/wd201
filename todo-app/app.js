@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.set("view engine", "ejs");
 
 app.get("/", async (request, response) => {
-  const allTodos = await Todo.retriveTodos();
+  const allTodos = await Todo.getTodos();
   if (request.accepts("html")) {
     response.render("index.ejs", {
       allTodos,
