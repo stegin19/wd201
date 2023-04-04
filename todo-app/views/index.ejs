@@ -5,10 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./css/styles.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>My todo application</title>
   </head>
   <body>
-    <%- include('header.ejs') %>
+    <div class="grid grid-cols-6">
+      <div class="col-start-3 col-span-2">
+        <%- include('header.ejs') %>
+
+        <form>
+          <div class="flex gap-3 py-5">
+
+            <div class="flex-auto">
+              <input type="text" placeholder="Whats next?" required class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm"/>
+            </div>
+
+            <div class="flex-auto">
+              <input type="date" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm leading-4"/>
+            </div>
+
+            <div class="flex-auto">
+              <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded mr-2 mb-2 ">Add</button>
+            </div>
+
+          </div>  
+        </form>
+      </div>   
+    </div>
+   
     <br>
 
     <%- include('todos.ejs') %>
