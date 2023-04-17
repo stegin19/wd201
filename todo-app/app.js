@@ -7,7 +7,7 @@ var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 const path = require("path");
 const { Todo } = require("./models");
-//const todo = require("./models/todo");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
 app.use(csrf("this_should_be_32_character_long", ["POST", "PUT", "DELETE"]));
@@ -38,7 +38,6 @@ app.get("/", async (request, response) => {
 });
 
 app.get("/todos", async (request, response) => {
-  // defining route to displaying message
   console.log("Todo list");
   try {
     const todoli = await Todo.findAll();

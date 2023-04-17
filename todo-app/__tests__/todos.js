@@ -28,8 +28,8 @@ describe("Todo Application", function () {
   });
 
   test("Creates new todo", async () => {
-    const { text } = await agent.get("/");
-    const csrfToken = ExtractCsrfToken(text);
+    const res = await agent.get("/");
+    const csrfToken = ExtractCsrfToken(res);
 
     const response = await agent.post("/todos").send({
       title: "Buy car",
@@ -41,7 +41,7 @@ describe("Todo Application", function () {
 
   test("Marks a todo as completed with id", async () => {
     let res = await agent.get("/");
-    let csrfToken = ExtractCsrfToken(res.text);
+    let csrfToken = ExtractCsrfToken(res);
     await agent.post("/todos").send({
       title: "clean",
       dueDate: new Date().toISOString(),
@@ -53,21 +53,21 @@ describe("Todo Application", function () {
       .set("Accept", "application/json");
     const parsedRes = JSON.parse(groupedTodo.text);
     const dueTodayCount = parsedRes.dueToday.length;
-    const latestTodo = parsedRes.dueToday[dueTodayCount - 1];
+    const todoitem = parsedRes.dueToday[dueTodayCount - 1];
 
     res = await agent.get("/");
     csrfToken = ExtractCsrfToken(res.text);
 
-    const markCompleted = await agent.put(`/todos/${latestTodo.id}`).send({
+    const markCompleted = await agent.put(`/todos/${todoitem.id}`).send({
       _csrf: csrfToken,
       completed: true,
     });
 
-    const parsedUpdatedResponse = JSON.parse(markCompleted.text);
-    expect(parsedUpdatedResponse.completed).toBe(true);
+    const parsedupdatedres = JSON.parse(markCompleted.text);
+    expect(parsedupdatedres.completed).toBe(true);
   });
 
-  test("Deletes a todo with the given ID", async () => {
+  test("Deletes a todo with id", async () => {
     let res = await agent.get("/");
     let csrfToken = ExtractCsrfToken(res.text);
 
@@ -77,9 +77,7 @@ describe("Todo Application", function () {
       _csrf: csrfToken,
     });
 
-    const groupeditem = await agent
-      .get("/todos")
-      .set("Accept", "application/json");
+    const groupeditem = await agent.get("/todos");
 
     const parsedRes = JSON.parse(groupeditem.text);
     const dueTodayCount = parsedRes.dueToday.length;
