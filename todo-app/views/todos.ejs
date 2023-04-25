@@ -6,7 +6,7 @@
     <% for(var i = 0; i < data.length; i++) { %>
     <li class="Todo-Item">
       <div
-        class="flex items-center w-fit ml-2 py-2 px-2 my-1 todoItem bg-rounded hover:bg-red-100"
+        class="flex items-center w-fit ml-2 py-1 px-2 my-1 todoItem bg-rounded hover:bg-purple-100"
       >
         <input type="checkbox" id="checkbox-<%= data[i].id %>" <%=
         data[i].completed ?"checked" : "" %> onclick="updateTodo(<%= data[i].id
