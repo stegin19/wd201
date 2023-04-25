@@ -29,7 +29,6 @@ app.use(
     },
   })
 );
-//use
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function (request, response, next) {
@@ -63,6 +62,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
+  console.log("Serializing user in session", user.id);
   done(null, user.id);
 });
 
@@ -129,6 +129,7 @@ app.post("/users", async (request, response) => {
     return response.redirect("/signup");
   }
   const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
+  console.log(hashedPwd);
 
   try {
     const user = await User.create({
@@ -173,6 +174,7 @@ app.get("/signout", (request, response, next) => {
 });
 
 app.get("/todos", async (request, response) => {
+  console.log("Todo list");
   try {
     const todoslist = await Todo.findAll();
     return response.json(todoslist);
@@ -203,6 +205,7 @@ app.post(
       request.flash("error", "Due date can not be empty!");
       return response.redirect("/todos");
     }
+    console.log("creating new todo", request.body);
     try {
       await Todo.addTodo({
         title: request.body.title,
@@ -222,6 +225,7 @@ app.put(
   "/todos/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
+    console.log("we have to update a todo with ID:", request.params.id);
     const todo = await Todo.findByPk(request.params.id);
     try {
       const updatedtodo = await todo.setCompletionStatus(
@@ -235,6 +239,7 @@ app.put(
   }
 );
 app.put("/todos/:id/markAsCompleted", async (request, response) => {
+  console.log("we have to update a todo with ID:", request.params.id);
   const todo = await Todo.findByPk(request.params.id);
   try {
     const updatedtodo = await todo.setCompletionStatus(request.body.completed);
@@ -249,6 +254,7 @@ app.delete(
   "/todos/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
+    console.log("delete a todo:", request.params.id);
     try {
       await Todo.remove(request.params.id, request.user.id);
       return response.json(true);
