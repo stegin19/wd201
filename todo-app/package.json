@@ -1,14 +1,13 @@
 {
   "name": "todo-app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon -e js,ejs",
     "start:prod": "node index.js",
     "pretest": "NODE_ENV=test npx sequelize-cli db:drop && NODE_ENV=test npx sequelize-cli db:create",
-    "test": "jest",
-    "prepare": "husky install"
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "prepare": "cd .. && husky install todo-app/.husky"
   },
   "lint-staged": {
     "*.js": [
@@ -16,7 +15,7 @@
       "prettier --write ."
     ]
   },
-  "author": "seeni",
+  "author": "Stegin Rajeev <steginmrajeev@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",
