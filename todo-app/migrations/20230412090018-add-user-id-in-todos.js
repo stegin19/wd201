@@ -4,17 +4,15 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.addColumn("Todos", "userId", {
-      //add col in todos model for forngine key
-      type: Sequelize.DataTypes.INTEGER, //properties of foreign key
+      type: Sequelize.DataTypes.INTEGER,
     });
 
     await queryInterface.addConstraint("Todos", {
-      //table name
-      fields: ["userId"], //foregin key name
-      type: "foreign key", //key type
+      fields: ["userId"],
+      type: "foreign key",
       references: {
-        table: "Users", //relation model
-        field: "id", //whicn key is use foregine key
+        table: "Users",
+        field: "id",
       },
     });
     /**

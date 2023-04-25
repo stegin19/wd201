@@ -6,33 +6,26 @@ const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 const path = require("path");
-
-//for authendication
 const passport = require("passport");
 const connectEnsureLogin = require("connect-ensure-login");
 const session = require("express-session");
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
-
-//for flash msg
 const flash = require("connect-flash");
 app.set("views", path.join(__dirname, "views"));
 app.use(flash());
-
 const saltRounds = 10;
-
 const { Todo, User } = require("./models");
-//const todo = require("./models/todo");
+const todo = require("./models/todo");
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
 app.use(csrf("this_should_be_32_character_long", ["POST", "PUT", "DELETE"]));
 
-//authentication using express session
 app.use(
   session({
     secret: "my-super-secret-key-21728172615261562",
     cookies: {
-      maxAge: 24 * 60 * 60 * 1000, //24hrs
+      maxAge: 24 * 60 * 60 * 1000,
     },
   })
 );
@@ -62,7 +55,7 @@ passport.use(
         })
         .catch(() => {
           return done(null, false, {
-            message: "Account doesn't exist",
+            message: "Account does'n  exist!!",
           });
         });
     }
@@ -134,29 +127,24 @@ app.get("/signup", (request, response) => {
 });
 
 app.post("/users", async (request, response) => {
-  //flash msg for firstname, email, pwd
-
-  //for firstname
   if (request.body.firstName.length == 0) {
-    request.flash("error", "FirstName can't be empty!");
+    request.flash("error", "FirstName can not be empty!");
     return response.redirect("/signup");
   }
 
-  //for email
   if (request.body.email.length == 0) {
-    request.flash("error", "email can't be empty!");
+    request.flash("error", "email cannot be empty");
     return response.redirect("/signup");
   }
   //for pwd
-  if (request.body.password.length < 6) {
-    request.flash("error", "password character length should be minimun 6!");
+  if (request.body.password.length < 7) {
+    request.flash("error", "password character length should be minimun of 7");
     return response.redirect("/signup");
   }
 
-  //hash password created
   const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
   console.log(hashedPwd);
-  // Have user created here
+
   try {
     const user = await User.create({
       firstName: request.body.firstName,
@@ -201,7 +189,6 @@ app.get("/signout", (request, response, next) => {
 });
 
 app.get("/todos", async (request, response) => {
-  // defining route to displaying message
   console.log("Todo list");
   try {
     const todolist = await Todo.findAll();
@@ -225,19 +212,13 @@ app.post(
   "/todos",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
-    console.log("creating new todo", request.body);
-    console.log(request.user);
-
-    //flash msg for todo title and dueDate
-    //for title
     if (request.body.title.length == 0) {
       request.flash("error", "Title can't be empty!");
       return response.redirect("/todos");
     }
 
-    //for duedate
     if (request.body.dueDate.length == 0) {
-      request.flash("error", "dueDate can't be empty!");
+      request.flash("error", "dueDate cannot be empty!");
       return response.redirect("/todos");
     }
 
@@ -260,7 +241,7 @@ app.put(
   "/todos/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
-    console.log("Mark Todo as completed:", request.params.id);
+    console.log("Mark as completed:", request.params.id);
     const todo = await Todo.findByPk(request.params.id);
     try {
       const updatedtodo = await todo.setCompletionStatus(
@@ -278,7 +259,7 @@ app.delete(
   "/todos/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
-    console.log("delete a todo with ID:", request.params.id);
+    console.log("delete a todo :", request.params.id);
     try {
       await Todo.remove(request.params.id, request.user.id);
       return response.json(true);

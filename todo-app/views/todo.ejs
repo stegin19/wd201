@@ -54,7 +54,7 @@
        <div class= "grid  grid-cols-6">
         <div class="col-start-3 col-span-2">
         <%- include("header.ejs") %>
-        <div class="flex items-center w-fit ml-2 py-1 px-2 my-1 todoItem bg-rounded hover:bg-purple-100 rounded pg-brown-300 italic">
+        <div class="flex items-center w-fit ml-2 py-1 px-2 my-1 todoItem bg-rounded hover:bg-red-100 rounded pg-gray-300 bold">
           <a href="/signout">
             signout
             <a href="/signout" class="trash-icon ml-2">
@@ -66,20 +66,20 @@
         </div>
         <% if(messages && messages.error && messages.error.length > 0)  { %>
           <% for(var i=0; i<messages.error.length; i++) { %>
-                <p class="border border-red-400 bg-red-200 text-red-600 w-full p-2 rounded"><%= messages.error[i] %></p>
+                <p class="border border-black-400 bg-green-200 text-green-600 w-full p-2 rounded"><%= messages.error[i] %></p>
           <% } %>
         <% } %>
         <form action="/todos" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="flex gap-2 py-4">
                 <div class="flex-auto">
-                    <input type="text" name="title" placeholder="what's next" class="border border-red-300 rounded text-gray-900 w-full p-2 text-sm"/>
+                    <input type="text" name="title" placeholder="what's next" class="border border-black-300 rounded text-gray-900 w-full p-2 text-sm"/>
                 </div>
             <div class="flex-auto">
-                <input type="date" name="dueDate" class="border border-red-300 rounded text-gray-900 w-full p-2 text-sm leading-4 " required/>
+                <input type="date" name="dueDate" class="border border-black-300 rounded text-gray-900 w-full p-2 text-sm leading-4 " required/>
             </div>
             <div class="flex-none">
-                <button type="submit" class="bg-red-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">Add</button>
+                <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">Add</button>
             </div>  
             </div>
         </form>
