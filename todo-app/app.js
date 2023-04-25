@@ -133,10 +133,10 @@ app.post("/users", async (request, response) => {
   }
 
   if (request.body.email.length == 0) {
-    request.flash("error", "email cannot be empty");
+    request.flash("error", "email should not be empty");
     return response.redirect("/signup");
   }
-  //for pwd
+
   if (request.body.password.length < 7) {
     request.flash("error", "password character length should be minimun of 7");
     return response.redirect("/signup");
@@ -218,7 +218,7 @@ app.post(
     }
 
     if (request.body.dueDate.length == 0) {
-      request.flash("error", "dueDate cannot be empty!");
+      request.flash("error", "dueDate should be empty!");
       return response.redirect("/todos");
     }
 

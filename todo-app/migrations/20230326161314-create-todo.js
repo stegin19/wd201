@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
         validate: {
           notNull: true,
-          len: [1, 21],
+          len: 6,
         },
       },
       dueDate: {
