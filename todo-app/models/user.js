@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Todo, {
         foreignKey: "userId",
       });
-      // define association here
     }
   }
   User.init(

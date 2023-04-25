@@ -213,7 +213,7 @@ app.post(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (request.body.title.length == 0) {
-      request.flash("error", "Title can't be empty!");
+      request.flash("error", "Title should not be empty!");
       return response.redirect("/todos");
     }
 
